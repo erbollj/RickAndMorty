@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".ui.list.ListFragment">
+
+    <EditText
+        android:id="@+id/et_find_character"
+        android:layout_width="280dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:background="@color/white"
+        android:hint="@string/find_character"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:background="@drawable/bg_btn_unclicked"
+        android:id="@+id/btn_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:text="@string/filter"
+        app:layout_constraintBottom_toBottomOf="@id/et_find_character"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/et_find_character"
+        app:layout_constraintTop_toTopOf="@id/et_find_character" />
+
+    <TextView
+        android:id="@+id/txt_characters"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/characters"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/et_find_character"
+        app:layout_constraintTop_toBottomOf="@id/et_find_character" />
+
+    <TextView
+        android:id="@+id/txt_reset"
+        android:layout_marginStart="200dp"
+        app:layout_constraintStart_toEndOf="@id/txt_characters"
+        app:layout_constraintTop_toTopOf="@id/txt_characters"
+        android:text="@string/reset"
+        android:textColor="@color/teal_700"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:paddingHorizontal="16dp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txt_characters"
+        app:spanCount="2"
+        tools:listitem="@layout/item_recycler" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

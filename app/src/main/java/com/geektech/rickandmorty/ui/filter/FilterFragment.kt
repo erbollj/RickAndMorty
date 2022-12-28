@@ -4,11 +4,10 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.geektech.rickandmorty.R
-import com.geektech.rickandmorty.base.BaseBottomFragment
+import com.geektech.rickandmorty.core.BaseBottomFragment
 import com.geektech.rickandmorty.databinding.FragmentFilterBinding
 
 class FilterFragment : BaseBottomFragment<FragmentFilterBinding, FilterViewModel>() {

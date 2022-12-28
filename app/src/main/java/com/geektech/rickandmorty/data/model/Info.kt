@@ -1,4 +1,4 @@
-package com.geektech.rickandmorty.model
+package com.geektech.rickandmorty.data.model
 
 data class Info(
     val count: Int,

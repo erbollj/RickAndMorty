@@ -1,10 +1,10 @@
-package com.geektech.rickandmorty
+package com.geektech.rickandmorty.ui.main
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.view.LayoutInflater
-import com.geektech.rickandmorty.base.BaseActivity
+import com.geektech.rickandmorty.core.BaseActivity
+import com.geektech.rickandmorty.data.repo.CharacterRepositoryImpl
 import com.geektech.rickandmorty.databinding.ActivityMainBinding
+import com.geektech.rickandmorty.domain.repo.CharacterRepository
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 

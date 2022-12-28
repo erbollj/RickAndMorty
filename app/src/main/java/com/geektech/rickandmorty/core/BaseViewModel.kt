@@ -1,4 +1,4 @@
-package com.geektech.rickandmorty.base
+package com.geektech.rickandmorty.core
 
 import androidx.lifecycle.ViewModel
 

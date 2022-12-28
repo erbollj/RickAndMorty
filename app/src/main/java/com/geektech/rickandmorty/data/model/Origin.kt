@@ -1,10 +1,9 @@
-package com.geektech.rickandmorty.model
+package com.geektech.rickandmorty.data.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
-@Parcelize
 data class Origin(
     val name: String,
     val url: String
-): Parcelable
+)

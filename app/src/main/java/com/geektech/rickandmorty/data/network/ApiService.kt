@@ -1,14 +1,20 @@
-package com.geektech.rickandmorty.network
+package com.geektech.rickandmorty.data.network
 
-import com.geektech.rickandmorty.model.Character
+import com.geektech.rickandmorty.data.model.Character
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ApiService {
+
     @GET("api/character")
     suspend fun getCharacters(
         @Query("page") page: Int
+    ): Response<Character>
+
+    @GET("api/character")
+    suspend fun getCharactersByName(
+        @Query("name") name: String
     ): Response<Character>
 
     @GET("api/character")

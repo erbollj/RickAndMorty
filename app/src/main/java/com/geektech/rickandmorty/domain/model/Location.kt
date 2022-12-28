@@ -1,4 +1,4 @@
-package com.geektech.rickandmorty.model
+package com.geektech.rickandmorty.domain.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
@@ -7,4 +7,4 @@ import kotlinx.parcelize.Parcelize
 data class Location(
     val name: String,
     val url: String
-): Parcelable
+) : Parcelable

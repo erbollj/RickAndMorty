@@ -10,7 +10,9 @@ import androidx.navigation.fragment.findNavController
 import com.geektech.rickandmorty.R
 import com.geektech.rickandmorty.core.BaseFragment
 import com.geektech.rickandmorty.databinding.FragmentListBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ListFragment : BaseFragment<FragmentListBinding, ListViewModel>() {
 
     override val viewModel: ListViewModel by viewModels()

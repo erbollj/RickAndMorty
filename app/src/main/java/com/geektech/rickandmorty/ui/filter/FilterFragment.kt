@@ -9,7 +9,9 @@ import androidx.navigation.fragment.findNavController
 import com.geektech.rickandmorty.R
 import com.geektech.rickandmorty.core.BaseBottomFragment
 import com.geektech.rickandmorty.databinding.FragmentFilterBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FilterFragment : BaseBottomFragment<FragmentFilterBinding, FilterViewModel>() {
 
     override val viewModel: FilterViewModel by viewModels()

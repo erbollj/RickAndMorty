@@ -5,17 +5,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.geektech.rickandmorty.core.Resource
 import com.geektech.rickandmorty.core.characterToCharacterDomain
-import com.geektech.rickandmorty.data.network.RetrofitClient
+import com.geektech.rickandmorty.data.network.ApiService
 import com.geektech.rickandmorty.domain.model.CharacterDomain
 import com.geektech.rickandmorty.domain.repo.CharacterRepository
 import kotlinx.coroutines.Dispatchers
+import javax.inject.Inject
 
-class CharacterRepositoryImpl : CharacterRepository {
+class CharacterRepositoryImpl @Inject constructor (private val api: ApiService) : CharacterRepository {
 
     override fun getCharacters(page: Int): LiveData<Resource<CharacterDomain>> =
         liveData(Dispatchers.IO) {
             emit(Resource.loading())
-            val result = RetrofitClient.api.getCharacters(page)
+            val result = api.getCharacters(page)
             if (result.isSuccessful) {
                 emit(Resource.success(result.body()!!.characterToCharacterDomain()))
             } else {
@@ -29,7 +30,7 @@ class CharacterRepositoryImpl : CharacterRepository {
         gender: String
     ): LiveData<Resource<CharacterDomain>> = liveData(Dispatchers.IO) {
         emit(Resource.loading())
-        val result = RetrofitClient.api.getCharactersByStatusAndGender(status, gender)
+        val result = api.getCharactersByStatusAndGender(status, gender)
         if (result.isSuccessful) {
             emit(Resource.success(result.body()!!.characterToCharacterDomain()))
         } else {
@@ -40,7 +41,7 @@ class CharacterRepositoryImpl : CharacterRepository {
     override fun getCharactersByStatus(status: String): LiveData<Resource<CharacterDomain>> =
         liveData(Dispatchers.IO) {
             emit(Resource.loading())
-            val result = RetrofitClient.api.getCharactersByStatus(status)
+            val result = api.getCharactersByStatus(status)
             if (result.isSuccessful) {
                 emit(Resource.success(result.body()!!.characterToCharacterDomain()))
             } else {
@@ -51,7 +52,7 @@ class CharacterRepositoryImpl : CharacterRepository {
     override fun getCharactersByGender(gender: String): LiveData<Resource<CharacterDomain>> =
         liveData(Dispatchers.IO) {
             emit(Resource.loading())
-            val result = RetrofitClient.api.getCharactersByGender(gender)
+            val result = api.getCharactersByGender(gender)
             if (result.isSuccessful) {
                 emit(Resource.success(result.body()!!.characterToCharacterDomain()))
             } else {
@@ -62,7 +63,7 @@ class CharacterRepositoryImpl : CharacterRepository {
     override fun getCharacterByName(name: String): LiveData<Resource<CharacterDomain>> =
         liveData(Dispatchers.IO) {
             emit(Resource.loading())
-            val result = RetrofitClient.api.getCharactersByName(name)
+            val result = api.getCharactersByName(name)
             if (result.isSuccessful) {
                 emit(Resource.success(result.body()!!.characterToCharacterDomain()))
             } else {

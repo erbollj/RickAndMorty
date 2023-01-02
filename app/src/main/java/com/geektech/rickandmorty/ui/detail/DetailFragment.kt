@@ -7,7 +7,9 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.geektech.rickandmorty.core.BaseFragment
 import com.geektech.rickandmorty.databinding.FragmentDetailBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>() {
 
     override val viewModel: DetailViewModel by viewModels()

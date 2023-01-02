@@ -3,17 +3,18 @@ package com.geektech.rickandmorty.ui.list
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.switchMap
 import com.geektech.rickandmorty.core.BaseViewModel
-import com.geektech.rickandmorty.data.repo.CharacterRepositoryImpl
 import com.geektech.rickandmorty.domain.use_cases.*
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class ListViewModel: BaseViewModel(){
-    val repo = CharacterRepositoryImpl()
-    private val getCharactersUseCase = GetCharactersUseCase(repo)
-    private val getCharactersByStatusAndGenderUseCase
-    = GetCharactersByStatusAndGenderUseCase(repo)
-    private val getCharactersByStatusUseCase = GetCharactersByStatusUseCase(repo)
-    private val getCharactersByGenderUseCase = GetCharactersByGenderUseCase(repo)
-    private val getCharactersByNameUseCase = GetCharacterByNameUseCase(repo)
+@HiltViewModel
+class ListViewModel @Inject constructor(
+    private val getCharactersUseCase: GetCharactersUseCase,
+    private val getCharactersByStatusAndGenderUseCase: GetCharactersByStatusAndGenderUseCase,
+    private val getCharactersByStatusUseCase: GetCharactersByStatusUseCase,
+    private val getCharactersByGenderUseCase: GetCharactersByGenderUseCase,
+    private val getCharactersByNameUseCase: GetCharacterByNameUseCase
+) : BaseViewModel(){
 
     private val _getCharacters = MutableLiveData<Int>()
     val getCharacters = _getCharacters.switchMap {

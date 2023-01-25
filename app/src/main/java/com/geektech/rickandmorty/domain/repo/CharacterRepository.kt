@@ -16,4 +16,8 @@ interface CharacterRepository {
 
     fun getCharacterByName(name: String): LiveData<Resource<CharacterDomain>>
 
+    fun addCharacter(characterDomain: CharacterDomain?): LiveData<Resource<Unit>>
+
+    fun getAllCharacters(): LiveData<Resource<CharacterDomain>>
+
 }

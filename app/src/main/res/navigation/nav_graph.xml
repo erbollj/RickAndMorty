@@ -27,7 +27,7 @@
         <argument
             android:name="currentResult"
             android:defaultValue="@null"
-            app:argType="com.geektech.rickandmorty.domain.model.Result"
+            app:argType="com.geektech.rickandmorty.domain.model.ResultDomain"
             app:nullable="true" />
     </fragment>
 

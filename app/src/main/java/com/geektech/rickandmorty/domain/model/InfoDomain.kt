@@ -1,8 +1,8 @@
 package com.geektech.rickandmorty.domain.model
 
-data class Info(
+data class InfoDomain(
     val count: Int,
     val next: String,
     val pages: Int,
-    val prev: Any
+    val prev: Any? = null
 )

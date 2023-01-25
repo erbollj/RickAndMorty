@@ -1,10 +1,5 @@
 package com.geektech.rickandmorty.data.model
 
-import android.os.Parcelable
-import com.geektech.rickandmorty.domain.model.Location
-import com.geektech.rickandmorty.domain.model.Origin
-import kotlinx.android.parcel.Parcelize
-
 data class Result(
     val created: String,
     val episode: List<String>,

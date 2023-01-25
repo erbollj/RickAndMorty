@@ -3,6 +3,7 @@ package com.geektech.rickandmorty.ui.list
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.switchMap
 import com.geektech.rickandmorty.core.BaseViewModel
+import com.geektech.rickandmorty.domain.model.CharacterDomain
 import com.geektech.rickandmorty.domain.use_cases.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -13,7 +14,9 @@ class ListViewModel @Inject constructor(
     private val getCharactersByStatusAndGenderUseCase: GetCharactersByStatusAndGenderUseCase,
     private val getCharactersByStatusUseCase: GetCharactersByStatusUseCase,
     private val getCharactersByGenderUseCase: GetCharactersByGenderUseCase,
-    private val getCharactersByNameUseCase: GetCharacterByNameUseCase
+    private val getCharactersByNameUseCase: GetCharacterByNameUseCase,
+    private val addCharacterUseCase: AddCharacterUseCase,
+    private val getAllCharactersUseCase: GetAllCharactersUseCase
 ) : BaseViewModel(){
 
     private val _getCharacters = MutableLiveData<Int>()
@@ -21,28 +24,13 @@ class ListViewModel @Inject constructor(
         getCharactersUseCase.getCharacters(it)
     }
 
+    fun getCharacters(page: Int) {
+        _getCharacters.postValue(page)
+    }
+
     private val _getCharactersByStatusAndGender = MutableLiveData<List<String>>()
     val getCharactersByStatusAndGender = _getCharactersByStatusAndGender.switchMap {
         getCharactersByStatusAndGenderUseCase.getCharactersByStatusAndGender(it[0], it[1])
-    }
-
-    private val _getCharactersByStatus = MutableLiveData<String>()
-    val getCharactersByStatus = _getCharactersByStatus.switchMap {
-        getCharactersByStatusUseCase.getCharactersByStatus(it)
-    }
-
-    private val _getCharactersByGender = MutableLiveData<String>()
-    val getCharactersByGender = _getCharactersByGender.switchMap {
-        getCharactersByGenderUseCase.getCharactersByGender(it)
-    }
-
-    private val _getCharacterByName = MutableLiveData<String>()
-    val getCharacterByName = _getCharacterByName.switchMap {
-        getCharactersByNameUseCase.getCharacterByName(it)
-    }
-
-    fun getCharacters(page: Int) {
-        _getCharacters.postValue(page)
     }
 
     fun getCharactersByStatusAndGender(status: String, gender: String) {
@@ -50,56 +38,49 @@ class ListViewModel @Inject constructor(
         _getCharactersByStatusAndGender.postValue(data)
     }
 
+    private val _getCharactersByStatus = MutableLiveData<String>()
+    val getCharactersByStatus = _getCharactersByStatus.switchMap {
+        getCharactersByStatusUseCase.getCharactersByStatus(it)
+    }
+
     fun getCharactersByStatus(status: String) {
         _getCharactersByStatus.postValue(status)
+    }
+
+    private val _getCharactersByGender = MutableLiveData<String>()
+    val getCharactersByGender = _getCharactersByGender.switchMap {
+        getCharactersByGenderUseCase.getCharactersByGender(it)
     }
 
     fun getCharactersByGender(gender: String) {
         _getCharactersByGender.postValue(gender)
     }
 
+    private val _getCharacterByName = MutableLiveData<String>()
+    val getCharacterByName = _getCharacterByName.switchMap {
+        getCharactersByNameUseCase.getCharacterByName(it)
+    }
+
     fun getCharacterByName(name: String) {
         _getCharacterByName.postValue(name)
     }
 
-//    val filterByStatusAndGender= _filterByStatusAndGender.switchMap {
-//        repo.getCharactersByStatusAndGender(it[0], it[1])
-//    }
-//
-//    val filterByName = _filterByName.switchMap {
-//        repo.getCharacterByName(it)
-//    }
-//
-//    val characters = _characters.switchMap {
-//        repo.getCharacters(it)
-//    }
-//
-//    val filterByStatus = _filterByStatus.switchMap {
-//        repo.getCharactersByStatus(it)
-//    }
-//
-//    val filterByGender = _filterByGender.switchMap {
-//        repo.getCharactersByGender(it)
-//    }
-//
-//    fun getCharactersByStatus(status: String) {
-//        _filterByStatus.postValue(status)
-//    }
-//
-//    fun getCharactersByName(name:String) {
-//        _filterByName.postValue(name)
-//    }
-//
-//    fun getCharactersByGender(gender: String) {
-//        _filterByGender.postValue(gender)
-//    }
-//
-//    fun getCharactersByStatusAndGender(status: String, gender: String) {
-//        val arrayGenderAndStatus = listOf(status, gender)
-//        _filterByStatusAndGender.postValue(arrayGenderAndStatus)
-//    }
-//    fun getCharacters(page: Int) {
-//        _characters.postValue(page)
-//    }
+    private val _addCharacter = MutableLiveData<CharacterDomain>()
+    val addCharacter = _addCharacter.switchMap {
+        addCharacterUseCase.addCharacter(it)
+    }
+
+    fun addCharacter(characterDomain: CharacterDomain) {
+        _addCharacter.postValue(characterDomain)
+    }
+
+    private val _getAllCharacters = MutableLiveData<Boolean>()
+    val getAllCharacters = _getAllCharacters.switchMap {
+        getAllCharactersUseCase.getAllCharacters()
+    }
+
+    fun getAllCharacters() {
+        _getAllCharacters.postValue(true)
+    }
 
 }

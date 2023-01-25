@@ -1,7 +1,7 @@
 package com.geektech.rickandmorty.core
 
 class Resource<T>(val data: T?, message: String?, val status: Status) {
-    enum class Status{
+     enum class Status{
         SUCCESS,
         ERROR,
         LOADING

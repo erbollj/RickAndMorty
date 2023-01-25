@@ -4,23 +4,29 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.geektech.rickandmorty.core.Resource
+import com.geektech.rickandmorty.core.characterDomainToCharacter
 import com.geektech.rickandmorty.core.characterToCharacterDomain
 import com.geektech.rickandmorty.data.network.ApiService
+import com.geektech.rickandmorty.data.room.CharacterDao
 import com.geektech.rickandmorty.domain.model.CharacterDomain
 import com.geektech.rickandmorty.domain.repo.CharacterRepository
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 
-class CharacterRepositoryImpl @Inject constructor (private val api: ApiService) : CharacterRepository {
+class CharacterRepositoryImpl @Inject constructor(
+    private val api: ApiService,
+    private val dao: CharacterDao
+) : CharacterRepository {
 
     override fun getCharacters(page: Int): LiveData<Resource<CharacterDomain>> =
         liveData(Dispatchers.IO) {
             emit(Resource.loading())
             val result = api.getCharacters(page)
             if (result.isSuccessful) {
+                Log.e("ololo", "getCharacters: " + result.body() )
                 emit(Resource.success(result.body()!!.characterToCharacterDomain()))
             } else {
-                emit(Resource.error("govno"))
+                emit(Resource.error(result.message()))
                 Log.e("ololo", "getCharacters: " + result.code())
             }
         }
@@ -71,55 +77,27 @@ class CharacterRepositoryImpl @Inject constructor (private val api: ApiService) 
             }
         }
 
-    //    fun getCharacters(page:Int): LiveData<Resource<Character?>> = liveData(Dispatchers.IO) {
-//        emit(Resource.loading())
-//        val result = RetrofitClient.api.getCharacters(page)
-//        if (result.isSuccessful) {
-//            emit(Resource.success(result.body()))
-//        } else {
-//            emit(Resource.error("govno"))
-//            Log.e("ololo", "getCharacters: " + result.code() )
-//        }
-//    }
-//
-//    fun getCharactersByStatusAndGender(status: String, gender: String): LiveData<Resource<Character?>> = liveData(Dispatchers.IO) {
-//        emit(Resource.loading())
-//        val result = RetrofitClient.api.getCharactersByStatusAndGender(status, gender)
-//        if (result.isSuccessful) {
-//            emit(Resource.success(result.body()))
-//        } else {
-//            emit(Resource.error(result.message()))
-//        }
-//    }
-//
-//    fun getCharactersByName(name: String): LiveData<Resource<Character?>> = liveData(Dispatchers.IO) {
-//        emit(Resource.loading())
-//        val result = RetrofitClient.api.getCharactersByName(name)
-//        if (result.isSuccessful) {
-//            emit(Resource.success(result.body()))
-//        } else {
-//            emit(Resource.error(result.message()))
-//        }
-//    }
-//
-//    fun getCharactersByStatus(status: String) : LiveData<Resource<Character?>> = liveData (Dispatchers.IO) {
-//        emit(Resource.loading())
-//        val result = RetrofitClient.api.getCharactersByStatus(status)
-//        if (result.isSuccessful) {
-//            emit(Resource.success(result.body()))
-//        } else {
-//            emit(Resource.error(result.message()))
-//        }
-//    }
-//
-//    fun getCharactersByGender(gender: String): LiveData<Resource<Character?>> = liveData (Dispatchers.IO) {
-//        emit(Resource.loading())
-//        val result = RetrofitClient.api.getCharactersByGender(gender)
-//        if (result.isSuccessful) {
-//            emit(Resource.success(result.body()))
-//        } else {
-//            emit(Resource.error(result.message()))
-//        }
-//    }
+    override fun addCharacter(characterDomain: CharacterDomain?): LiveData<Resource<Unit>> =
+        liveData(Dispatchers.IO) {
+            emit(Resource.loading())
+            try {
+                if (characterDomain != null) {
+                    emit(Resource.success(dao.addCharacter(characterDomain.characterDomainToCharacter())))
+                }
+            } catch (e: Exception) {
+                emit(Resource.error(e.message.toString()))
+            }
+        }
+
+    override fun getAllCharacters(): LiveData<Resource<CharacterDomain>> =
+        liveData(Dispatchers.IO) {
+            emit(Resource.loading())
+            val result = dao.getAllCharacters().map { it.characterToCharacterDomain() }
+            try {
+                emit(Resource.success(result.component1()))
+            } catch (e: Exception) {
+                emit(Resource.error(e.message.toString()))
+            }
+        }
 
 }

@@ -30,7 +30,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>() {
             txtIsAlive.text = args.currentResult!!.status
             txtGenderOfCharacter.text = args.currentResult!!.gender
             txtNameOfCharacter.text = args.currentResult!!.name
-            txtLocationOfCharacter.text = args.currentResult!!.location.name
+            txtLocationOfCharacter.text = args.currentResult!!.locationDomain.name
             Glide.with(imgOfCharacter).load(args.currentResult!!.image).into(imgOfCharacter)
         }
     }

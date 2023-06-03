@@ -1,23 +1,30 @@
 package com.geektech.rickandmorty.domain.repo
 
-import androidx.lifecycle.LiveData
+import androidx.paging.PagingData
 import com.geektech.rickandmorty.core.Resource
-import com.geektech.rickandmorty.domain.model.CharacterDomain
+import com.geektech.rickandmorty.domain.model.*
+import kotlinx.coroutines.flow.Flow
 
 interface CharacterRepository {
 
-    fun getCharacters(page: Int): LiveData<Resource<CharacterDomain>>
+    fun getCharacters(): Flow<Resource<CharacterDomain>>
 
-    fun getCharactersByStatusAndGender(status: String, gender: String): LiveData<Resource<CharacterDomain>>
+    fun getPagedCharacters(): Flow<PagingData<CharacterResultDomain>>
 
-    fun getCharactersByStatus(status: String): LiveData<Resource<CharacterDomain>>
+    fun getCharactersByStatusAndGender(status: String, gender: String): Flow<Resource<CharacterDomain>>
 
-    fun getCharactersByGender(gender: String): LiveData<Resource<CharacterDomain>>
+    fun getCharactersByStatus(status: String): Flow<Resource<CharacterDomain>>
 
-    fun getCharacterByName(name: String): LiveData<Resource<CharacterDomain>>
+    fun getCharactersByGender(gender: String): Flow<Resource<CharacterDomain>>
 
-    fun addCharacter(characterDomain: CharacterDomain?): LiveData<Resource<Unit>>
+    fun getCharacterByName(name: String): Flow<Resource<CharacterDomain>>
 
-    fun getAllCharacters(): LiveData<Resource<CharacterDomain>>
+    fun getLocations(): Flow<Resource<LocationDomain>>
+
+    fun getPagedLocations(): Flow<PagingData<LocationResultDomain>>
+
+    fun getEpisodes(): Flow<Resource<EpisodeDomain>>
+
+    fun getPagedEpisodes(): Flow<PagingData<EpisodeResultDomain>>
 
 }

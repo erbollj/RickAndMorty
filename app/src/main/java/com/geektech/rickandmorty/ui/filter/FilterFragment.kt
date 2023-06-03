@@ -1,6 +1,5 @@
 package com.geektech.rickandmorty.ui.filter
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,12 +8,11 @@ import androidx.navigation.fragment.findNavController
 import com.geektech.rickandmorty.R
 import com.geektech.rickandmorty.core.BaseBottomFragment
 import com.geektech.rickandmorty.databinding.FragmentFilterBinding
-import dagger.hilt.android.AndroidEntryPoint
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-@AndroidEntryPoint
 class FilterFragment : BaseBottomFragment<FragmentFilterBinding, FilterViewModel>() {
 
-    override val viewModel: FilterViewModel by viewModels()
+    override val viewModel: FilterViewModel by viewModel()
 
     override fun inflateViewBinding(
         inflater: LayoutInflater,
@@ -28,7 +26,6 @@ class FilterFragment : BaseBottomFragment<FragmentFilterBinding, FilterViewModel
 
     }
 
-    @SuppressLint("ResourceAsColor")
     override fun initListener() {
 
         val mainBundle = Bundle()
@@ -74,8 +71,9 @@ class FilterFragment : BaseBottomFragment<FragmentFilterBinding, FilterViewModel
         }
 
         binding.btnApply.setOnClickListener {
-            findNavController().navigate(R.id.action_filterFragment_to_listFragment, mainBundle)
+            findNavController().navigate(R.id.action_filterFragment_to_characterFragment, mainBundle)
         }
+
     }
 
 }

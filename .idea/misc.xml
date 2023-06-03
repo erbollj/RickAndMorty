@@ -9,9 +9,13 @@
         <entry key="..\:/Users/Admin/AndroidStudioProjects/RickandMorty/app/src/main/res/drawable/bg_button.xml" value="0.1375" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/RickandMorty/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1375" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/RickandMorty/app/src/main/res/layout/activity_main.xml" value="0.17255434782608695" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/RickandMorty/app/src/main/res/layout/fragment_character.xml" value="0.1743659420289855" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/RickandMorty/app/src/main/res/layout/fragment_detail.xml" value="0.17255434782608695" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/RickandMorty/app/src/main/res/layout/fragment_episodes.xml" value="0.1743659420289855" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/RickandMorty/app/src/main/res/layout/fragment_filter.xml" value="0.17255434782608695" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/RickandMorty/app/src/main/res/layout/fragment_fragments.xml" value="0.1743659420289855" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/RickandMorty/app/src/main/res/layout/fragment_list.xml" value="0.17255434782608695" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/RickandMorty/app/src/main/res/layout/fragment_location.xml" value="0.1743659420289855" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/RickandMorty/app/src/main/res/layout/item_recycler.xml" value="0.17255434782608695" />
       </map>
     </option>

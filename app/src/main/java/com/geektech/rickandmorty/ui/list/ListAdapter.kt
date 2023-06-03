@@ -1,37 +1,24 @@
 package com.geektech.rickandmorty.ui.list
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Lifecycle
+import androidx.viewbinding.ViewBinding
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.geektech.rickandmorty.core.BaseFragment
+import com.geektech.rickandmorty.core.BaseViewModel
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.navigation.findNavController
-import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.geektech.rickandmorty.databinding.ItemRecyclerBinding
-import com.geektech.rickandmorty.domain.model.ResultDomain
-
-class ListAdapter(private val list: List<ResultDomain>): RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
-
-    inner class ListViewHolder(private val binding: ItemRecyclerBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(position: ResultDomain) {
-            Glide.with(binding.imgOfCharacter).load(position.image).into(binding.imgOfCharacter)
-            binding.btnIdNumber.text = position.id.toString()
-            binding.txtIsAlive.text = position.status
-            binding.txtNameOfCharacter.text = position.name
-            itemView.setOnClickListener {
-                val action = ListFragmentDirections.actionListFragmentToDetailFragment(position)
-                it.findNavController().navigate(action)
-            }
-        }
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
-        return ListViewHolder(ItemRecyclerBinding.inflate(LayoutInflater.from(parent.context), parent, false))
-    }
-
-    override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        holder.bind(list[position])
-    }
+class ListAdapter(
+    val list: ArrayList<BaseFragment<out ViewBinding, out BaseViewModel>>,
+    fragment: Fragment
+): FragmentStateAdapter(fragment) {
 
     override fun getItemCount(): Int {
         return list.size
     }
+
+    override fun createFragment(position: Int): Fragment {
+        return list[position]
+    }
+
 }

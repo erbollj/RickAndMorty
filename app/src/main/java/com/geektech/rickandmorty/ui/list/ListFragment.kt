@@ -1,26 +1,20 @@
 package com.geektech.rickandmorty.ui.list
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
-import com.geektech.rickandmorty.R
 import com.geektech.rickandmorty.core.BaseFragment
 import com.geektech.rickandmorty.databinding.FragmentListBinding
-import dagger.hilt.android.AndroidEntryPoint
+import com.geektech.rickandmorty.ui.character.CharacterFragment
+import com.geektech.rickandmorty.ui.episodes.EpisodesFragment
+import com.geektech.rickandmorty.ui.location.LocationFragment
+import com.google.android.material.tabs.TabLayoutMediator
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-@AndroidEntryPoint
 class ListFragment : BaseFragment<FragmentListBinding, ListViewModel>() {
 
-    override val viewModel: ListViewModel by viewModels()
-    private val page = 1
-    val bundleStatus = arguments?.getBundle("bundleStatus")
-    val bundleGender = arguments?.getBundle("bundleGender")
-    val status = bundleStatus?.getString("key1")
-    val gender = bundleGender?.getString("key2")
+    override val viewModel: ListViewModel by viewModel()
 
     override fun inflateViewBinding(
         inflater: LayoutInflater,
@@ -32,87 +26,21 @@ class ListFragment : BaseFragment<FragmentListBinding, ListViewModel>() {
 
     override fun initView() {
 
-        if (status == null && gender == null) {
+        val fragmentList = arrayListOf(
+            CharacterFragment(),
+            LocationFragment(),
+            EpisodesFragment()
+        )
 
-            viewModel.getCharacters(page)
-            viewModel.getCharacters.observe(viewLifecycleOwner) {
-                it.data?.let { it1 -> viewModel.addCharacter(it1) }
-            }
-
-            viewModel.addCharacter.observe(viewLifecycleOwner) {
-                //siuu
-            }
-
-            viewModel.getAllCharacters()
-            viewModel.getAllCharacters.observe(viewLifecycleOwner) {
-                    val result = it.data?.resultDomains
-                    val adapter = result?.let { it1 -> ListAdapter(it1) }
-                    binding.recycler.adapter = adapter
-            }
-
-        } else if (gender == null) {
-
-            viewModel.getCharactersByStatus(status.toString())
-            viewModel.getCharactersByStatus.observe(viewLifecycleOwner) {
-                val adapter = it.data?.let { it1 -> ListAdapter(it1.resultDomains) }
-                binding.recycler.adapter = adapter
-            }
-
-        } else if (status == null) {
-
-            viewModel.getCharactersByGender(gender.toString())
-            viewModel.getCharactersByGender.observe(viewLifecycleOwner) {
-                val adapter = it.data?.let { it1 -> ListAdapter(it1.resultDomains) }
-                binding.recycler.adapter = adapter
-            }
-
-        } else {
-
-            viewModel.getCharactersByStatusAndGender(status.toString(), gender.toString())
-            viewModel.getCharactersByStatusAndGender.observe(viewLifecycleOwner) {
-                val adapter = it.data?.let { it1 -> ListAdapter(it1.resultDomains) }
-                binding.recycler.adapter = adapter
-            }
-
-        }
+        binding.viewPager.adapter = ListAdapter(fragmentList, this)
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) {tab, position ->
+            val number = position + 1
+            tab.text = "Tab $number"
+        }.attach()
 
     }
 
     override fun initListener() {
-
-        binding.txtReset.setOnClickListener {
-
-            viewModel.getCharacters(1)
-            viewModel.getCharacters.observe(viewLifecycleOwner) {
-                val adapter = it.data?.let { it1 -> ListAdapter(it1.resultDomains) }
-                binding.recycler.adapter = adapter
-            }
-
-        }
-
-        binding.etFindCharacter.addTextChangedListener(object: TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                val name = p0.toString()
-
-                viewModel.getCharacterByName(name)
-                viewModel.getCharacterByName.observe(viewLifecycleOwner) {
-                    val adapter = it.data?.let { it1 -> ListAdapter(it1.resultDomains) }
-                    binding.recycler.adapter = adapter
-                }
-
-            }
-
-            override fun afterTextChanged(p0: Editable?) {
-            }
-
-        })
-
-        binding.btnFilter.setOnClickListener {
-            findNavController().navigate(R.id.action_listFragment_to_filterFragment)
-        }
 
     }
 

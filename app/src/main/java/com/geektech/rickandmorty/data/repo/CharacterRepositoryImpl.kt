@@ -1,102 +1,124 @@
 package com.geektech.rickandmorty.data.repo
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.liveData
-import com.geektech.rickandmorty.core.Resource
-import com.geektech.rickandmorty.core.characterDomainToCharacter
-import com.geektech.rickandmorty.core.characterToCharacterDomain
+import androidx.lifecycle.viewmodel.viewModelFactory
+import androidx.paging.*
+import com.geektech.rickandmorty.core.*
 import com.geektech.rickandmorty.data.network.ApiService
-import com.geektech.rickandmorty.data.room.CharacterDao
-import com.geektech.rickandmorty.domain.model.CharacterDomain
+import com.geektech.rickandmorty.data.paging.EpisodePagingSource
+import com.geektech.rickandmorty.data.paging.LocationPagingSource
+import com.geektech.rickandmorty.data.paging.PageSource
+import com.geektech.rickandmorty.domain.model.*
 import com.geektech.rickandmorty.domain.repo.CharacterRepository
-import kotlinx.coroutines.Dispatchers
-import javax.inject.Inject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlin.coroutines.coroutineContext
 
-class CharacterRepositoryImpl @Inject constructor(
+class CharacterRepositoryImpl(
     private val api: ApiService,
-    private val dao: CharacterDao
 ) : CharacterRepository {
 
-    override fun getCharacters(page: Int): LiveData<Resource<CharacterDomain>> =
-        liveData(Dispatchers.IO) {
-            emit(Resource.loading())
-            val result = api.getCharacters(page)
+    override fun getCharacters(): Flow<Resource<CharacterDomain>> =
+        flow {
+            emit(Resource.Loading())
+            val result = api.getCharacters()
             if (result.isSuccessful) {
-                Log.e("ololo", "getCharacters: " + result.body() )
-                emit(Resource.success(result.body()!!.characterToCharacterDomain()))
+                Log.e("ololo", "getCharacters: " + result.body())
+                emit(Resource.Success(result.body()!!.characterToCharacterDomain()))
             } else {
-                emit(Resource.error(result.message()))
+                emit(Resource.Error(result.message()))
                 Log.e("ololo", "getCharacters: " + result.code())
             }
         }
 
+    override fun getPagedCharacters(): Flow<PagingData<CharacterResultDomain>> {
+        return Pager(PagingConfig(10),
+            pagingSourceFactory = {
+                PageSource(api)
+            }
+        ).flow
+    }
+
+    override fun getLocations(): Flow<Resource<LocationDomain>> =
+        flow {
+            emit(Resource.Loading())
+            val result = api.getLocations()
+            if (result.isSuccessful) {
+                Log.e("ololo", "getLocations: " + result.body())
+                emit(Resource.Success(result.body()!!.locationToLocationDomain()))
+            } else {
+                emit(Resource.Error(result.message()))
+            }
+        }
+
+    override fun getPagedLocations(): Flow<PagingData<LocationResultDomain>> {
+        return Pager(PagingConfig(10), pagingSourceFactory = {
+            LocationPagingSource(api)
+        }).flow
+    }
+
+    override fun getEpisodes(): Flow<Resource<EpisodeDomain>> =
+        flow {
+            emit(Resource.Loading())
+            val result = api.getEpisodes()
+            if (result.isSuccessful) {
+                Log.e("ololo", "getEpisodes: " + result.body())
+                emit(Resource.Success(result.body()!!.episodeToEpisodeDomain()))
+            } else {
+                emit(Resource.Error(result.message()))
+            }
+        }
+
+    override fun getPagedEpisodes(): Flow<PagingData<EpisodeResultDomain>> {
+        return Pager(PagingConfig(10), pagingSourceFactory = {
+            EpisodePagingSource(api)
+        } ).flow
+    }
+
     override fun getCharactersByStatusAndGender(
         status: String,
         gender: String
-    ): LiveData<Resource<CharacterDomain>> = liveData(Dispatchers.IO) {
-        emit(Resource.loading())
+    ): Flow<Resource<CharacterDomain>> = flow {
+        emit(Resource.Loading())
         val result = api.getCharactersByStatusAndGender(status, gender)
         if (result.isSuccessful) {
-            emit(Resource.success(result.body()!!.characterToCharacterDomain()))
+            emit(Resource.Success(result.body()!!.characterToCharacterDomain()))
         } else {
-            emit(Resource.error(result.message()))
+            emit(Resource.Error(result.message()))
         }
     }
 
-    override fun getCharactersByStatus(status: String): LiveData<Resource<CharacterDomain>> =
-        liveData(Dispatchers.IO) {
-            emit(Resource.loading())
+    override fun getCharactersByStatus(status: String): Flow<Resource<CharacterDomain>> =
+        flow {
+            emit(Resource.Loading())
             val result = api.getCharactersByStatus(status)
             if (result.isSuccessful) {
-                emit(Resource.success(result.body()!!.characterToCharacterDomain()))
+                emit(Resource.Success(result.body()!!.characterToCharacterDomain()))
             } else {
-                emit(Resource.error(result.message()))
+                emit(Resource.Error(result.message()))
             }
         }
 
-    override fun getCharactersByGender(gender: String): LiveData<Resource<CharacterDomain>> =
-        liveData(Dispatchers.IO) {
-            emit(Resource.loading())
+    override fun getCharactersByGender(gender: String): Flow<Resource<CharacterDomain>> =
+        flow {
+            emit(Resource.Loading())
             val result = api.getCharactersByGender(gender)
             if (result.isSuccessful) {
-                emit(Resource.success(result.body()!!.characterToCharacterDomain()))
+                emit(Resource.Success(result.body()!!.characterToCharacterDomain()))
             } else {
-                emit(Resource.error(result.message()))
+                emit(Resource.Error(result.message()))
             }
         }
 
-    override fun getCharacterByName(name: String): LiveData<Resource<CharacterDomain>> =
-        liveData(Dispatchers.IO) {
-            emit(Resource.loading())
+    override fun getCharacterByName(name: String): Flow<Resource<CharacterDomain>> =
+        flow {
+            emit(Resource.Loading())
             val result = api.getCharactersByName(name)
             if (result.isSuccessful) {
-                emit(Resource.success(result.body()!!.characterToCharacterDomain()))
+                emit(Resource.Success(result.body()!!.characterToCharacterDomain()))
             } else {
-                emit(Resource.error(result.message()))
-            }
-        }
-
-    override fun addCharacter(characterDomain: CharacterDomain?): LiveData<Resource<Unit>> =
-        liveData(Dispatchers.IO) {
-            emit(Resource.loading())
-            try {
-                if (characterDomain != null) {
-                    emit(Resource.success(dao.addCharacter(characterDomain.characterDomainToCharacter())))
-                }
-            } catch (e: Exception) {
-                emit(Resource.error(e.message.toString()))
-            }
-        }
-
-    override fun getAllCharacters(): LiveData<Resource<CharacterDomain>> =
-        liveData(Dispatchers.IO) {
-            emit(Resource.loading())
-            val result = dao.getAllCharacters().map { it.characterToCharacterDomain() }
-            try {
-                emit(Resource.success(result.component1()))
-            } catch (e: Exception) {
-                emit(Resource.error(e.message.toString()))
+                emit(Resource.Error(result.message()))
             }
         }
 

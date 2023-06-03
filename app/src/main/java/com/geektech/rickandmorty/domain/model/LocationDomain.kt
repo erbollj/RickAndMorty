@@ -1,10 +1,7 @@
 package com.geektech.rickandmorty.domain.model
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+data class LocationDomain (
+    val info: InfoDomain,
+    val results: List<LocationResultDomain>
+)
 
-@Parcelize
-data class LocationDomain(
-    val name: String,
-    val url: String
-) : Parcelable

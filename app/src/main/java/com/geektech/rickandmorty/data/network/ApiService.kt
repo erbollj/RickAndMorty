@@ -10,48 +10,23 @@ import retrofit2.http.Query
 interface ApiService {
 
     @GET("api/character")
-    suspend fun getCharacters(
-    ): Response<Character>
-
-    @GET("api/character")
     suspend fun getPagedCharacters(
-        @Query("page") page: Int
+        @Query("page") page: Int,
+        @Query("name") name: String?,
+        @Query("status") status: String?,
+        @Query("gender") gender: String?
     ): Response<Character>
-
-    @GET("api/character")
-    suspend fun getCharactersByName(
-        @Query("name") name: String
-    ): Response<Character>
-
-    @GET("api/character")
-    suspend fun getCharactersByStatusAndGender(
-        @Query("status") status: String,
-        @Query("gender") gender: String
-    ): Response<Character>
-
-    @GET("api/character")
-    suspend fun getCharactersByStatus(
-        @Query("status") status: String
-    ): Response<Character>
-
-    @GET("api/character")
-    suspend fun getCharactersByGender(
-        @Query("gender") gender: String
-    ): Response<Character>
-
-    @GET("api/location")
-    suspend fun getLocations(): Response<Location>
 
     @GET("api/location")
     suspend fun getPagedLocations(
-        @Query("page") page: Int
+        @Query("page") page: Int,
+        @Query("name") name: String?
     ): Response<Location>
 
     @GET("api/episode")
-    suspend fun getEpisodes(): Response<Episode>
-
-    @GET("api/episode")
     suspend fun getPagedEpisodes(
-        @Query("page") page: Int
+        @Query("page") page: Int,
+        @Query("name") name: String?
     ): Response<Episode>
+
 }

@@ -3,16 +3,18 @@ package com.geektech.rickandmorty.ui.filter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.geektech.rickandmorty.R
 import com.geektech.rickandmorty.core.BaseBottomFragment
 import com.geektech.rickandmorty.databinding.FragmentFilterBinding
+import com.geektech.rickandmorty.ui.main.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FilterFragment : BaseBottomFragment<FragmentFilterBinding, FilterViewModel>() {
 
     override val viewModel: FilterViewModel by viewModel()
+    private val sharedViewModel: MainViewModel by activityViewModels()
 
     override fun inflateViewBinding(
         inflater: LayoutInflater,
@@ -28,22 +30,18 @@ class FilterFragment : BaseBottomFragment<FragmentFilterBinding, FilterViewModel
 
     override fun initListener() {
 
-        val mainBundle = Bundle()
-        val bundleStatus = Bundle()
-        val bundleGender = Bundle()
-        mainBundle.putBundle("bundleStatus", bundleStatus)
-        mainBundle.putBundle("bundleGender", bundleGender)
-
         binding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.rBtnAlive -> {
-                    bundleStatus.putString("key1", "alive")
+                    sharedViewModel.getCharactersWithStatus("Alive")
                 }
+
                 R.id.rBtnDead -> {
-                    bundleStatus.putString("key1", "dead")
+                    sharedViewModel.getCharactersWithStatus("Dead")
                 }
+
                 else -> {
-                    bundleStatus.putString("key1", "unknown")
+                    sharedViewModel.getCharactersWithStatus("unknown")
                 }
             }
         }
@@ -51,16 +49,19 @@ class FilterFragment : BaseBottomFragment<FragmentFilterBinding, FilterViewModel
         binding.radioGroup2.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.rBtnMale -> {
-                    bundleGender.putString("key2", "male")
+                    sharedViewModel.getCharactersWithGender("Male")
                 }
+
                 R.id.rBtnFemale -> {
-                    bundleGender.putString("key2", "female")
+                    sharedViewModel.getCharactersWithGender("Female")
                 }
+
                 R.id.rBtnGenderUnknown -> {
-                    bundleGender.putString("key2", "unknown")
+                    sharedViewModel.getCharactersWithGender("unknown")
                 }
+
                 R.id.rBtnGenderless -> {
-                    bundleGender.putString("key2", "genderless")
+                    sharedViewModel.getCharactersWithGender("Male")
                 }
             }
         }
@@ -68,10 +69,12 @@ class FilterFragment : BaseBottomFragment<FragmentFilterBinding, FilterViewModel
         binding.txtClear.setOnClickListener {
             binding.radioGroup.clearCheck()
             binding.radioGroup2.clearCheck()
+            sharedViewModel.getCharactersWithGender(null)
+            sharedViewModel.getCharactersWithStatus(null)
         }
 
         binding.btnApply.setOnClickListener {
-            findNavController().navigate(R.id.action_filterFragment_to_characterFragment, mainBundle)
+            findNavController().navigateUp()
         }
 
     }

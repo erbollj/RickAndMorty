@@ -1,7 +1,8 @@
 package com.geektech.rickandmorty.domain.use_cases
 
-import com.geektech.rickandmorty.domain.repo.CharacterRepository
+import com.geektech.rickandmorty.domain.repo.Repository
 
-class GetPagedLocationsUseCase(private val repo: CharacterRepository) {
-    fun getPagedLocations() = repo.getPagedLocations()
+class GetPagedLocationsUseCase(private val repo: Repository) {
+    fun getPagedLocations(name: String?) = repo.getPagedLocations(name)
+
 }

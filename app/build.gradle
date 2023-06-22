@@ -1,7 +1,6 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id "androidx.navigation.safeargs.kotlin"
     id 'kotlin-parcelize'
     id 'kotlin-kapt'
 }
@@ -76,6 +75,9 @@ dependencies {
 
     //Koin
     implementation "io.insert-koin:koin-android:3.1.2"
+
+    //Interceptor
+    implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
 
 }
 

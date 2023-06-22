@@ -9,32 +9,37 @@ import com.bumptech.glide.Glide
 import com.geektech.rickandmorty.databinding.ItemRecyclerBinding
 import com.geektech.rickandmorty.domain.model.LocationResultDomain
 
-class LocationsAdapter: PagingDataAdapter<LocationResultDomain, LocationsViewHolder>(ResultDiffUtilCallback) {
+class LocationsAdapter :
+    PagingDataAdapter<LocationResultDomain, LocationsViewHolder>(ResultDiffUtilCallback) {
 
     override fun onBindViewHolder(holder: LocationsViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocationsViewHolder {
-        return LocationsViewHolder(ItemRecyclerBinding.inflate(LayoutInflater.from(parent.context),
-        parent, false))
+        return LocationsViewHolder(
+            ItemRecyclerBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent, false
+            )
+        )
     }
 
 }
 
-class LocationsViewHolder(private val binding: ItemRecyclerBinding): RecyclerView.ViewHolder(binding.root) {
+class LocationsViewHolder(private val binding: ItemRecyclerBinding) :
+    RecyclerView.ViewHolder(binding.root) {
     fun bind(item: LocationResultDomain?) {
-        Glide.with(binding.imgOfCharacter).
-        load("https://static.wikia.nocookie.net/rickandmorty/images/d/d3/Anatomy_Park_7.png/revision/latest?cb=20160913082442").
-        into(binding.imgOfCharacter)
-        binding.txtIsAlive.text = item?.created
+        Glide.with(binding.imgOfCharacter)
+            .load("https://static.wikia.nocookie.net/rickandmorty/images/d/d3/Anatomy_Park_7.png/revision/latest?cb=20160913082442")
+            .into(binding.imgOfCharacter)
         binding.txtNameOfCharacter.text = item?.name
         binding.btnIdNumber.text = item?.id.toString()
     }
 
 }
 
-private object ResultDiffUtilCallback: DiffUtil.ItemCallback<LocationResultDomain>() {
+private object ResultDiffUtilCallback : DiffUtil.ItemCallback<LocationResultDomain>() {
 
     override fun areItemsTheSame(
         oldItem: LocationResultDomain,

@@ -102,53 +102,59 @@
         app:layout_constraintTop_toBottomOf="@id/radioGroup"
         tools:ignore="HardcodedText" />
 
-    <RadioGroup
-        android:id="@+id/radioGroup2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+    <HorizontalScrollView
+        android:id="@+id/scrollView"
         app:layout_constraintStart_toStartOf="@id/txt_gender"
-        app:layout_constraintTop_toBottomOf="@id/txt_gender">
-
-        <RadioButton
-            android:id="@+id/rBtnMale"
+        app:layout_constraintTop_toBottomOf="@id/txt_gender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RadioGroup
+            android:id="@+id/radioGroup2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/male"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
+            android:orientation="horizontal">
 
-        <RadioButton
-            android:id="@+id/rBtnFemale"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:checked="false"
-            android:text="@string/female"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
+            <RadioButton
+                android:id="@+id/rBtnMale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/male"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
 
-        <RadioButton
-            android:id="@+id/rBtnGenderless"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:checked="false"
-            android:text="@string/genderless"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
+            <RadioButton
+                android:id="@+id/rBtnFemale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:checked="false"
+                android:text="@string/female"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
 
-        <RadioButton
-            android:id="@+id/rBtnGenderUnknown"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:checked="false"
-            android:text="@string/unknown"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
+            <RadioButton
+                android:id="@+id/rBtnGenderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:checked="false"
+                android:text="@string/genderless"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
 
-    </RadioGroup>
+            <RadioButton
+                android:id="@+id/rBtnGenderUnknown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:checked="false"
+                android:text="@string/unknown"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+        </RadioGroup>
+    </HorizontalScrollView>
+
 
     <Button
         android:id="@+id/btn_apply"
@@ -160,6 +166,6 @@
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/radioGroup2" />
+        app:layout_constraintTop_toBottomOf="@id/scrollView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

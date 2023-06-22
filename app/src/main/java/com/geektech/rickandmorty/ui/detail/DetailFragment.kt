@@ -1,20 +1,17 @@
 package com.geektech.rickandmorty.ui.detail
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.geektech.rickandmorty.core.BaseFragment
 import com.geektech.rickandmorty.databinding.FragmentDetailBinding
+import com.geektech.rickandmorty.domain.model.CharacterResultDomain
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>() {
 
     override val viewModel: DetailViewModel by viewModel()
-    private val args by navArgs<DetailFragmentArgs>()
-
-
 
     override fun inflateViewBinding(
         inflater: LayoutInflater,
@@ -25,16 +22,23 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>() {
     }
 
     override fun initView() {
+
         binding.apply {
-            txtIsAlive.text = args.currentResult!!.status
-            txtGenderOfCharacter.text = args.currentResult!!.gender
-            txtNameOfCharacter.text = args.currentResult!!.name
-            txtLocationOfCharacter.text = args.currentResult!!.locationDomain.name
-            Glide.with(imgOfCharacter).load(args.currentResult!!.image).into(imgOfCharacter)
+            arguments?.getParcelable<CharacterResultDomain>("result").let {
+                if (it != null) {
+                    txtIsAlive.text = it.status
+                    txtGenderOfCharacter.text = it.gender
+                    txtNameOfCharacter.text = it.name
+                    txtLocationOfCharacter.text = it.locationDomain.name
+                    Glide.with(imgOfCharacter).load(it.image).into(imgOfCharacter)
+                }
+            }.toString()
         }
+
     }
 
     override fun initListener() {
+
     }
 
 

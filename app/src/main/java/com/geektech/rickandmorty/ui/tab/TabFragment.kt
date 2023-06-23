@@ -70,6 +70,7 @@ class TabFragment : BaseFragment<FragmentTabBinding, TabViewModel>() {
             }
 
             override fun afterTextChanged(p0: Editable?) {
+                sharedViewModel.getSearchedCharacters(p0.toString())
             }
 
         })

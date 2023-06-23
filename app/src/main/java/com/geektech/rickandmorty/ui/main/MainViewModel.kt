@@ -1,10 +1,29 @@
 package com.geektech.rickandmorty.ui.main
 
+import androidx.lifecycle.asLiveData
 import com.geektech.rickandmorty.core.BaseViewModel
+import com.geektech.rickandmorty.core.NetworkStatusTracker
+import com.geektech.rickandmorty.core.map
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class MainViewModel : BaseViewModel() {
+class MainViewModel(
+    networkStatusTracker: NetworkStatusTracker,
+) : BaseViewModel() {
+    sealed class MyState {
+        object Fetched : MyState()
+        object Error : MyState()
+    }
+
+    val state =
+        networkStatusTracker.networkStatus
+            .map(
+                onUnavailable = { MyState.Error },
+                onAvailable = { MyState.Fetched },
+            )
+            .asLiveData(Dispatchers.IO)
+
 
     private val _getSearchedCharacters = MutableStateFlow<String?>(null)
     val getSearchedCharacters = _getSearchedCharacters.asStateFlow()

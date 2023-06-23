@@ -15,6 +15,7 @@
         android:orientation="horizontal">
 
         <EditText
+            android:imeOptions="actionDone"
             android:paddingHorizontal="10dp"
             android:id="@+id/et_find_character"
             android:layout_width="280dp"

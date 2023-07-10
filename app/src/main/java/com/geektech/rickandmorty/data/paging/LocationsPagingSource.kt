@@ -2,12 +2,12 @@ package com.geektech.rickandmorty.data.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.geektech.rickandmorty.core.locationResultToLocationResultDomain
-import com.geektech.rickandmorty.data.network.ApiService
+import com.geektech.rickandmorty.data.network.LocationsApi
+import com.geektech.rickandmorty.data.utils.locationResultToLocationResultDomain
 import com.geektech.rickandmorty.domain.model.LocationResultDomain
 import retrofit2.HttpException
 
-class LocationsPagingSource(private val api: ApiService, private val name: String?) :
+class LocationsPagingSource(private val api: LocationsApi, private val name: String?) :
     PagingSource<Int, LocationResultDomain>() {
 
     override fun getRefreshKey(state: PagingState<Int, LocationResultDomain>): Int? {

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".ui.filter.FilterFragment">
+    tools:context=".presentation.ui.fragments.filter.FilterFragment">
 
     <TextView
         android:id="@+id/txt_filter"
@@ -104,10 +104,11 @@
 
     <HorizontalScrollView
         android:id="@+id/scrollView"
-        app:layout_constraintStart_toStartOf="@id/txt_gender"
-        app:layout_constraintTop_toBottomOf="@id/txt_gender"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/txt_gender"
+        app:layout_constraintTop_toBottomOf="@id/txt_gender">
+
         <RadioGroup
             android:id="@+id/radioGroup2"
             android:layout_width="wrap_content"

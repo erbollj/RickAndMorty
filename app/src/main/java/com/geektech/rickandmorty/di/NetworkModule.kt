@@ -1,6 +1,8 @@
 package com.geektech.rickandmorty.di
 
-import com.geektech.rickandmorty.data.network.ApiService
+import com.geektech.rickandmorty.data.network.CharactersApi
+import com.geektech.rickandmorty.data.network.EpisodesApi
+import com.geektech.rickandmorty.data.network.LocationsApi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
@@ -10,17 +12,41 @@ import java.util.concurrent.TimeUnit
 
 val networkModule = module {
     single { createOkHttpClient() }
-    single { provideApiService(get()) }
+    single { provideCharactersApi(get()) }
+    single { provideEpisodesApi(get()) }
+    single { provideLocationsApi(get()) }
 }
 
-fun provideApiService(okHttpClient: OkHttpClient): ApiService {
+fun provideEpisodesApi(okHttpClient: OkHttpClient): EpisodesApi {
 
     return Retrofit.Builder()
         .client(okHttpClient)
         .baseUrl("https://rickandmortyapi.com/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
-        .create(ApiService::class.java)
+        .create(EpisodesApi::class.java)
+
+}
+
+fun provideCharactersApi(okHttpClient: OkHttpClient): CharactersApi {
+
+    return Retrofit.Builder()
+        .client(okHttpClient)
+        .baseUrl("https://rickandmortyapi.com/")
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+        .create(CharactersApi::class.java)
+
+}
+
+fun provideLocationsApi(okHttpClient: OkHttpClient): LocationsApi {
+
+    return Retrofit.Builder()
+        .client(okHttpClient)
+        .baseUrl("https://rickandmortyapi.com/")
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+        .create(LocationsApi::class.java)
 
 }
 

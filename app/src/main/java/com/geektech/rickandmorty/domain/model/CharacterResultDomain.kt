@@ -1,9 +1,6 @@
 package com.geektech.rickandmorty.domain.model
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
 
-@Parcelize
 data class CharacterResultDomain(
     val created: String,
     val episode: List<String>,
@@ -17,4 +14,4 @@ data class CharacterResultDomain(
     val status: String,
     val type: String,
     val url: String
-): Parcelable
+)

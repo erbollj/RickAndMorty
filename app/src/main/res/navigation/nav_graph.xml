@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/listFragment"
-        android:name="com.geektech.rickandmorty.ui.tab.TabFragment"
+        android:name="com.geektech.rickandmorty.presentation.ui.fragments.tab.TabFragment"
         android:label="fragment_list"
         tools:layout="@layout/fragment_tab">
         <action
@@ -20,35 +20,32 @@
 
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.geektech.rickandmorty.ui.detail.DetailFragment"
+        android:name="com.geektech.rickandmorty.presentation.ui.fragments.detail.DetailFragment"
         android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail">
-    </fragment>
+        tools:layout="@layout/fragment_detail"/>
 
     <dialog
         android:id="@+id/filterFragment"
-        android:name="com.geektech.rickandmorty.ui.filter.FilterFragment"
+        android:name="com.geektech.rickandmorty.presentation.ui.fragments.filter.FilterFragment"
         android:label="fragment_filter"
-        tools:layout="@layout/fragment_filter">
-    </dialog>
+        tools:layout="@layout/fragment_filter"/>
 
     <fragment
         android:id="@+id/locationFragment"
-        android:name="com.geektech.rickandmorty.ui.location.LocationsFragment"
+        android:name="com.geektech.rickandmorty.presentation.ui.fragments.location.LocationsFragment"
         android:label="fragment_location"
         tools:layout="@layout/fragment_location" />
 
     <fragment
         android:id="@+id/episodesFragment"
-        android:name="com.geektech.rickandmorty.ui.episodes.EpisodesFragment"
+        android:name="com.geektech.rickandmorty.presentation.ui.fragments.episodes.EpisodesFragment"
         android:label="fragment_episodes"
         tools:layout="@layout/fragment_episodes" />
 
     <fragment
         android:id="@+id/characterFragment"
-        android:name="com.geektech.rickandmorty.ui.character.CharacterFragment"
+        android:name="com.geektech.rickandmorty.presentation.ui.fragments.character.CharacterFragment"
         android:label="fragment_character"
-        tools:layout="@layout/fragment_character">
-    </fragment>
+        tools:layout="@layout/fragment_character"/>
 
 </navigation>

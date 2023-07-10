@@ -2,13 +2,13 @@ package com.geektech.rickandmorty.data.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.geektech.rickandmorty.core.resultListToResultDomainList
-import com.geektech.rickandmorty.data.network.ApiService
+import com.geektech.rickandmorty.data.network.CharactersApi
+import com.geektech.rickandmorty.data.utils.resultListToResultDomainList
 import com.geektech.rickandmorty.domain.model.CharacterResultDomain
 import retrofit2.HttpException
 
 class CharactersPagingSource(
-    private val api: ApiService,
+    private val api: CharactersApi,
     private val name: String?,
     private val status: String?,
     private val gender: String?

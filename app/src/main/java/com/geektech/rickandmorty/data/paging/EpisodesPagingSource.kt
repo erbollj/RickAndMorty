@@ -2,12 +2,12 @@ package com.geektech.rickandmorty.data.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.geektech.rickandmorty.core.episodeResultToEpisodeResultDomain
-import com.geektech.rickandmorty.data.network.ApiService
+import com.geektech.rickandmorty.data.network.EpisodesApi
+import com.geektech.rickandmorty.data.utils.episodeResultToEpisodeResultDomain
 import com.geektech.rickandmorty.domain.model.EpisodeResultDomain
 import retrofit2.HttpException
 
-class EpisodesPagingSource(private val api: ApiService, private val name: String?) :
+class EpisodesPagingSource(private val api: EpisodesApi, private val name: String?) :
     PagingSource<Int, EpisodeResultDomain>() {
 
     override fun getRefreshKey(state: PagingState<Int, EpisodeResultDomain>): Int? {

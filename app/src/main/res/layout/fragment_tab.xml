@@ -7,7 +7,7 @@
     android:background="@color/black"
     android:orientation="vertical"
     android:padding="10dp"
-    tools:context=".ui.tab.TabFragment">
+    tools:context=".presentation.ui.fragments.tab.TabFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,15 +15,15 @@
         android:orientation="horizontal">
 
         <EditText
-            android:imeOptions="actionDone"
-            android:paddingHorizontal="10dp"
             android:id="@+id/et_find_character"
             android:layout_width="280dp"
             android:layout_height="50dp"
             android:background="@color/white"
             android:hint="@string/find_character"
+            android:imeOptions="actionDone"
             android:importantForAutofill="no"
             android:inputType="text"
+            android:paddingHorizontal="10dp"
             android:textColor="@color/black" />
 
         <Button
